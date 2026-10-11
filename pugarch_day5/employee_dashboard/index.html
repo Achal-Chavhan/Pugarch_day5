@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div>
+        <h1>Employee Directory</h1>
+        <p class="subtitle">Manage staff listings, records, and departmental data</p>
+      </div>
+      <button id="btn-add-employee" class="btn btn-primary">+ Add Employee</button>
+    </header>
+
+    <!-- Toolbar: Search, Filters, Sorting -->
+    <section class="toolbar">
+      <div class="search-box">
+        <input 
+          type="search" 
+          id="search-input" 
+          placeholder="Search by name, email, or role..."
+          aria-label="Search employees"
+        >
+      </div>
+
+      <div class="filter-controls">
+        <select id="filter-department" aria-label="Filter by department">
+          <option value="ALL">All Departments</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Design">Design</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Human Resources">Human Resources</option>
+        </select>
+
+        <select id="filter-status" aria-label="Filter by status">
+          <option value="ALL">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="On Leave">On Leave</option>
+          <option value="Terminated">Terminated</option>
+        </select>
+
+        <select id="sort-by" aria-label="Sort employees">
+          <option value="name-asc">Name (A - Z)</option>
+          <option value="name-desc">Name (Z - A)</option>
+          <option value="salary-desc">Salary (High to Low)</option>
+          <option value="salary-asc">Salary (Low to High)</option>
+          <option value="joined-desc">Joined (Newest first)</option>
+          <option value="joined-asc">Joined (Oldest first)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Metrics Bar -->
+    <section class="metrics-bar">
+      <span>Total Shown: <strong id="metric-count">0</strong></span>
+    </section>
+
+    <!-- Employee Table -->
+    <main class="table-wrapper">
+      <table class="employee-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Salary</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body">
+          <!-- Rendered via JavaScript -->
+        </tbody>
+      </table>
+      <div id="empty-state" class="empty-state hidden">No matching employees found.</div>
+    </main>
+  </div>
+
+  <!-- Add / Edit Modal -->
+  <dialog id="employee-modal" class="modal">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="modal-title">Add Employee</h2>
+        <button id="modal-close-btn" class="btn-close" aria-label="Close dialog">&times;</button>
+      </header>
+      <form id="employee-form" novalidate>
+        <input type="hidden" id="employee-id">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">First Name *</label>
+            <input type="text" id="first-name" required>
+            <span class="error-msg">First name is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name *</label>
+            <input type="text" id="last-name" required>
+            <span class="error-msg">Last name is required.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Work Email *</label>
+          <input type="email" id="email" required>
+          <span class="error-msg">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="department">Department *</label>
+            <select id="department" required>
+              <option value="">Select Department</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Design">Design</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Human Resources">Human Resources</option>
+            </select>
+            <span class="error-msg">Select a department.</span>
+          </div>
+          <div class="form-group">
+            <label for="role">Role *</label>
+            <input type="text" id="role" required>
+            <span class="error-msg">Role is required.</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="salary">Annual Salary (USD) *</label>
+            <input type="number" id="salary" min="1000" step="500" required>
+            <span class="error-msg">Please provide a valid salary.</span>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="Active">Active</option>
+              <option value="On Leave">On Leave</option>
+              <option value="Terminated">Terminated</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Employee</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- View Details Modal -->
+  <dialog id="details-modal" class="modal">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2>Employee Profile</h2>
+        <button id="details-close-btn" class="btn-close" aria-label="Close dialog">&times;</button>
+      </header>
+      <div id="details-body" class="profile-details">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
